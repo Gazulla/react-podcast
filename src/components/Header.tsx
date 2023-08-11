@@ -1,3 +1,9 @@
+import SearchBar from "./SearchBar";
+
 export default function Header() {
-  return <div>Header</div>;
+  return (
+    <div>
+      <SearchBar></SearchBar>
+    </div>
+  );
 }
