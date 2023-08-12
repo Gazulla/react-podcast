@@ -12,6 +12,10 @@ export interface PodcastContextType {
   setPodcasts: (podcasts: PodcastType[]) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  playingPodcast: PodcastType;
+  setPlayingPodcast: (playingPodcast: PodcastType) => void;
+  isPlaying: boolean;
+  setIsPlaying: (loading: boolean) => void;
 }
 
 // Children prop

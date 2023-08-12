@@ -4,7 +4,16 @@ import { PodcastType } from "../types";
 import { PodcastContext } from "../context/podcastContext";
 
 export default function usePodcasts() {
-  const { podcasts, setPodcasts, loading, setLoading } = useContext(PodcastContext);
+  const {
+    podcasts,
+    setPodcasts,
+    loading,
+    setLoading,
+    isPlaying,
+    setIsPlaying,
+    playingPodcast,
+    setPlayingPodcast,
+  } = useContext(PodcastContext);
 
   const mapPodcast = (podcastRaw: any) => {
     return {
@@ -20,9 +29,7 @@ export default function usePodcasts() {
     };
   };
 
-  type GetPodcatsProps = {
-    search: string;
-  };
+  type GetPodcatsProps = { search: string };
 
   const getPodcasts = async ({ search }: GetPodcatsProps) => {
     setLoading(true);
@@ -43,5 +50,24 @@ export default function usePodcasts() {
     }
   };
 
-  return { podcasts, getPodcasts, loading };
+  const switchPlaying = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  type SwapPodcastProps = { newPodcast: PodcastType };
+
+  const swapPlayingPodcast = ({ newPodcast }: SwapPodcastProps) => {
+    setPlayingPodcast(newPodcast);
+    setIsPlaying(true);
+  };
+
+  return {
+    podcasts,
+    getPodcasts,
+    loading,
+    isPlaying,
+    switchPlaying,
+    playingPodcast,
+    swapPlayingPodcast,
+  };
 }

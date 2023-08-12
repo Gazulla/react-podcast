@@ -15,7 +15,7 @@ function App() {
           </Route>
         </Routes>
       </main>
-      <footer className="h-28"></footer>
+      <footer className="h-28 md:h-32"></footer>
       <BottomPlayBar></BottomPlayBar>
     </Router>
   );

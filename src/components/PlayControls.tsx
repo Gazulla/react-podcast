@@ -1,9 +1,11 @@
-import { useState } from "react";
+type ControlsBarProps = {
+  isPlaying: boolean;
+  switchPlaying: () => void;
+};
 
-export default function ControlsBar() {
-  const [playing, setPlaying] = useState<boolean>();
+export default function PlayControls({ isPlaying, switchPlaying }: ControlsBarProps) {
   const handleClickPlay = () => {
-    setPlaying(!playing);
+    switchPlaying();
   };
   return (
     <div className="flex gap-6 place-items-center">
@@ -16,10 +18,10 @@ export default function ControlsBar() {
       <button
         onClick={(e) => handleClickPlay()}
         className={`w-12 h-12 rounded-full justify-center items-center gap-3 inline-flex ${
-          playing && "bg-indigo-500 sm:hover:bg-indigo-600"
+          isPlaying && "bg-indigo-500 sm:hover:bg-indigo-600"
         } duration-300`}
       >
-        {playing ? (
+        {isPlaying ? (
           <img className="w-5 h-5" src="/pause_1.svg" alt="Pause"></img>
         ) : (
           <img className="w-5 h-5" src="/play_1.svg" alt="Play"></img>
