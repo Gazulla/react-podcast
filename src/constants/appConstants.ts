@@ -1,0 +1,1 @@
+export const MAX_NUM_PODCASTS_TO_FETCH = 20;
