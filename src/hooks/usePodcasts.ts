@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { MAX_NUM_PODCASTS_TO_FETCH } from "../constants/appConstants";
 import { PodcastType } from "../types";
+import { PodcastContext } from "../context/podcastContext";
 
 export default function usePodcasts() {
-  const [podcasts, setPodcasts] = useState<PodcastType[]>();
+  const { podcasts, setPodcasts, loading, setLoading } = useContext(PodcastContext);
 
   const mapPodcast = (podcastRaw: any) => {
     return {
@@ -24,17 +25,23 @@ export default function usePodcasts() {
   };
 
   const getPodcasts = async ({ search }: GetPodcatsProps) => {
+    setLoading(true);
     try {
       const result = await fetch(
         `https://itunes.apple.com/search?term=${search}&limit=${MAX_NUM_PODCASTS_TO_FETCH}&media=podcast&entity=podcast`
       );
       const data = await result.json();
-      const podcasts: any = data.results.map((podcastRaw: any) => mapPodcast(podcastRaw));
-      console.log(podcasts);
+      const newPodcasts: PodcastType[] = data.results.map((podcastRaw: any) =>
+        mapPodcast(podcastRaw)
+      );
+      console.log(newPodcasts);
+      setPodcasts(newPodcasts);
     } catch (error) {
       throw new Error("Error fetching Podcasts from the API.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { podcasts, getPodcasts, setPodcasts };
+  return { podcasts, getPodcasts, loading };
 }

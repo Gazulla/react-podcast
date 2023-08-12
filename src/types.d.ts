@@ -1,7 +1,22 @@
 export interface PodcastType {
-  id: podcastRaw.id;
-  title: podcastRaw.title;
-  author: podcastRaw.author;
-  topic: podcastRaw.topic;
-  date: podcastRaw.released;
+  id: number;
+  title: string;
+  authortName: string;
+  date: string;
+  img: string;
 }
+
+// Podcast context
+export interface PodcastContextType {
+  podcasts: PodcastType[];
+  setPodcasts: (podcasts: PodcastType[]) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+}
+
+// Children prop
+type ReactText = string | number;
+type ReactChild = ReactElement | ReactText;
+interface ReactNodeArray extends Array<ReactNode> {}
+type ReactFragment = {} | ReactNodeArray;
+export type ChildrenType = ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;

@@ -1,3 +1,11 @@
+import ListPodcasts from "../components/ListPodcast";
+import PlayThumbnail from "../components/PlayThumbnail";
+
 export default function Search() {
-  return <div>Search Results</div>;
+  return (
+    <>
+      <PlayThumbnail />
+      <ListPodcasts />
+    </>
+  );
 }

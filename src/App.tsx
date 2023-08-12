@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <Header></Header>
-      <main className="w-full max-w-3xl px-3">
+      <main className="w-full max-w-5xl px-3">
         <Routes>
           <Route path="/" element={<SearchPage />} />
           <Route path="podcast">
@@ -15,6 +15,7 @@ function App() {
           </Route>
         </Routes>
       </main>
+      <footer className="h-28"></footer>
       <BottomPlayBar></BottomPlayBar>
     </Router>
   );
