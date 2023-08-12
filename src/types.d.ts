@@ -6,6 +6,10 @@ export interface PodcastType {
   img: string;
 }
 
+export interface FiltersType {
+  sort: string;
+}
+
 // Podcast context
 export interface PodcastContextType {
   podcasts: PodcastType[];
@@ -16,6 +20,7 @@ export interface PodcastContextType {
   setPlayingPodcast: (playingPodcast: PodcastType) => void;
   isPlaying: boolean;
   setIsPlaying: (loading: boolean) => void;
+  isFirstTime: any;
 }
 
 // Children prop

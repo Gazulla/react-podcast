@@ -13,6 +13,7 @@ export default function usePodcasts() {
     setIsPlaying,
     playingPodcast,
     setPlayingPodcast,
+    isFirstTime,
   } = useContext(PodcastContext);
 
   const mapPodcast = (podcastRaw: any) => {
@@ -32,6 +33,10 @@ export default function usePodcasts() {
   type GetPodcatsProps = { search: string };
 
   const getPodcasts = async ({ search }: GetPodcatsProps) => {
+    if (search === "") {
+      return;
+    }
+    isFirstTime.current = false;
     setLoading(true);
     try {
       const result = await fetch(
@@ -41,7 +46,6 @@ export default function usePodcasts() {
       const newPodcasts: PodcastType[] = data.results.map((podcastRaw: any) =>
         mapPodcast(podcastRaw)
       );
-      console.log(newPodcasts);
       setPodcasts(newPodcasts);
     } catch (error) {
       throw new Error("Error fetching Podcasts from the API.");
@@ -51,7 +55,7 @@ export default function usePodcasts() {
   };
 
   const switchPlaying = () => {
-    setIsPlaying(!isPlaying);
+    playingPodcast.id !== 0 && setIsPlaying(!isPlaying);
   };
 
   type SwapPodcastProps = { newPodcast: PodcastType };
@@ -69,5 +73,6 @@ export default function usePodcasts() {
     switchPlaying,
     playingPodcast,
     swapPlayingPodcast,
+    isFirstTime: isFirstTime.current,
   };
 }

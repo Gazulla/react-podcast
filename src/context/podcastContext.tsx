@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useRef } from "react";
 import { PodcastContextType, ChildrenType, PodcastType } from "../types";
 import { EMPTY_PODCAST } from "../constants/appConstants";
 
@@ -13,7 +13,7 @@ export function PodcastContextProvider({ children }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [playingPodcast, setPlayingPodcast] = useState<PodcastType>(EMPTY_PODCAST);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
+  const isFirstTime = useRef<boolean>(true);
   return (
     <PodcastContext.Provider
       value={{
@@ -25,6 +25,7 @@ export function PodcastContextProvider({ children }: Props) {
         setPlayingPodcast,
         isPlaying,
         setIsPlaying,
+        isFirstTime,
       }}
     >
       {children}
