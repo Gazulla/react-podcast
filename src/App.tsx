@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <Header></Header>
-      <main>
+      <main className="w-full max-w-3xl px-3">
         <Routes>
           <Route path="/" element={<SearchPage />} />
           <Route path="podcast">
