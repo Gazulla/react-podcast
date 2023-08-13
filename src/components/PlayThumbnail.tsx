@@ -38,7 +38,7 @@ export default function PlayThumbnail({ podcast }: PlayThumbnailProps) {
             )}
           </button>
 
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold md:px-24 md:text-center">
             {podcast.title}
             <img className="inline ml-1 pb-1" src="/verify_1.svg" alt="Verify"></img>
           </h1>

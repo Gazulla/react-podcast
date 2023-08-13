@@ -18,19 +18,22 @@ export default function ListRelatedPodcasts({ podcasts }: ListPodcastProps) {
         <div>No related podcasts found</div>
       ) : (
         <>
-          <div className="w-full h-14">
-            <div className="w-full grid grid-cols-12 gap-2 md:gap-4 h-10 relative border-b border-neutral-600">
+          <div className="h-14 w-full ">
+            <div className="grid grid-cols-12 gap-2 md:gap-4 h-10 relative border-b border-neutral-600 w-full ">
               <div className="col-span-2 md:col-span-1 text-neutral-500 text-sm font-semibold">
                 #
               </div>
-              <div className="col-span-10 md:col-span-5 text-neutral-500 text-sm font-semibold">
-                Name
+              <div className="col-span-10 md:col-span-4 text-neutral-500 text-sm font-semibold">
+                Title
               </div>
               <div className="col-span-4 hidden md:block text-neutral-500 text-sm font-semibold">
-                Description
+                Topic
               </div>
               <div className="col-span-2 hidden md:block text-neutral-500 text-sm font-semibold">
                 Released
+              </div>
+              <div className="col-span-1 hidden md:block">
+                <img className="w-4 h-4" src="/time_1.svg" alt="Clock" />
               </div>
             </div>
           </div>

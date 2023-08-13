@@ -20,3 +20,12 @@ export const getDate = (fullDate: string) => {
         releasedDate.getFullYear();
   return stringDate;
 };
+
+export const getTime = (fullDate: string) => {
+  const date = new Date(fullDate);
+  let hours = date.getHours().toString();
+  let minutes = date.getMinutes().toString();
+  minutes = minutes.length === 1 ? "0" + minutes : minutes;
+  hours = hours.length === 1 ? "0" + hours : hours;
+  return hours + ":" + minutes;
+};

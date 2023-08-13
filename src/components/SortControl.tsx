@@ -18,7 +18,7 @@ export default function SortingControl({ filters, changeFilters }: SortingContro
       </div>
       <div className="rounded-2xl justify-start items-center gap-1.5 flex">
         <select
-          className="text-white text-sm md:text-base font-normal bg-black border-0"
+          className="text-white text-sm md:text-base font-normal bg-black border-0 cursor-pointer"
           onChange={(e) => handleChangeSort(e.target.value)}
           value={filters.sort}
         >

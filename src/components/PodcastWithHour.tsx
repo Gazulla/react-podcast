@@ -1,7 +1,7 @@
 import { PodcastType } from "../types";
 import usePodcasts from "../hooks/usePodcasts";
 import { Link } from "react-router-dom";
-import { getDate } from "../utils/miscFunctions";
+import { getDate, getTime } from "../utils/miscFunctions";
 
 export default function PodcastWithHour({ podcast }: { podcast: PodcastType }) {
   const { playingPodcast, isPlaying, switchPlaying, swapPlayingPodcast } = usePodcasts();
@@ -35,7 +35,7 @@ export default function PodcastWithHour({ podcast }: { podcast: PodcastType }) {
 
         <Link
           to={`/podcast/${podcast.id}`}
-          className="col-span-10 md:col-span-5 flex gap-4 justify-center place-items-center w-full h-full"
+          className="col-span-10 md:col-span-4 flex gap-4 justify-center place-items-center w-full h-full"
         >
           <img
             className="w-9 h-9 md:w-11 md:h-11 rounded-lg"
@@ -66,6 +66,9 @@ export default function PodcastWithHour({ podcast }: { podcast: PodcastType }) {
 
         <div className="col-span-2 hidden md:table text-neutral-500 text-base font-medium">
           {getDate(podcast.date)}
+        </div>
+        <div className="col-span-1 hidden md:table text-neutral-500 text-base font-medium">
+          {getTime(podcast.date)}
         </div>
       </div>
     </div>
