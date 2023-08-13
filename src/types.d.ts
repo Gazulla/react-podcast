@@ -26,6 +26,7 @@ export interface PodcastContextType {
 
 export interface FiltersType {
   sort: string;
+  word: string;
 }
 
 // Children prop

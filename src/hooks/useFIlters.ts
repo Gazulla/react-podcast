@@ -13,6 +13,20 @@ export default function useFilters() {
     setFilters(NEW_FILTERS);
   };
 
+  const filterPodcasts = useCallback(
+    (podcastsToFilter: PodcastType[]) => {
+      if (filters.word.trim() === "") {
+        return podcastsToFilter;
+      }
+
+      return [...podcastsToFilter].filter((podcast) => {
+        return podcast.title.includes(filters.word);
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [filters]
+  );
+
   const sortPodcasts = useCallback(
     (podcastsToSort: PodcastType[]) => {
       if (filters.sort === "no_sort") {
@@ -56,5 +70,5 @@ export default function useFilters() {
     [filters]
   );
 
-  return { filters, changeFilters, sortPodcasts, clearFilters };
+  return { filters, changeFilters, sortPodcasts, filterPodcasts, clearFilters };
 }

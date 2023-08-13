@@ -1,18 +1,18 @@
 import useFilters from "../hooks/useFIlters";
 import { PodcastType } from "../types";
 import PodcastWithHour from "./PodcastWithHour";
-import SortingControl from "./SortControl";
+import FilterControls from "./FIlterControls";
 
 type ListPodcastProps = {
   podcasts: PodcastType[];
 };
 export default function ListRelatedPodcasts({ podcasts }: ListPodcastProps) {
-  const { filters, changeFilters, sortPodcasts } = useFilters();
-  const filteredPodcasts = sortPodcasts(podcasts);
+  const { filters, changeFilters, sortPodcasts, filterPodcasts } = useFilters();
+  const filteredPodcasts = filterPodcasts(sortPodcasts(podcasts));
   return (
     <>
       <div className="w-full h-14 relative">
-        <SortingControl filters={filters} changeFilters={changeFilters}></SortingControl>
+        <FilterControls filters={filters} changeFilters={changeFilters}></FilterControls>
       </div>
       {podcasts.length === 0 ? (
         <div>No related podcasts found</div>

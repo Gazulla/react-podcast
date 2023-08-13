@@ -42,7 +42,6 @@ export default function Podcast({ podcast }: { podcast: PodcastType }) {
             src={podcast.img}
             alt={podcast.title}
           />
-
           <div className="table table-fixed w-full h-full">
             <div className="table-row">
               <div className="text-white text-sm md:text-base font-medium whitespace-nowrap overflow-hidden overflow-ellipsis table-cell">

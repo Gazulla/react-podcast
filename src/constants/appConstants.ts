@@ -18,6 +18,7 @@ export const SORT_TYPES = [
 
 export const NEW_FILTERS = {
   sort: "",
+  word: "",
 };
 
 export const DAYS_OF_WEEK = [

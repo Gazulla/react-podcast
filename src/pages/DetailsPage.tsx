@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import ListRelatedPodcasts from "../components/ListRelatedPodcasts";
 import PlayThumbnail from "../components/PlayThumbnail";
+import Loading from "../components/Loading";
 
 export default function Details() {
   const { id } = useParams<{ id: string }>();
@@ -41,10 +42,8 @@ export default function Details() {
 
       <main className="w-full max-w-5xl px-3">
         {loading ? (
-          <div>Loading</div>
-        ) : podcastDetails.podcast.id === 0 ? (
-          <div>Resource not found.</div>
-        ) : (
+          <Loading></Loading>
+        ) : podcastDetails.podcast.id === 0 ? null : (
           <>
             <PlayThumbnail podcast={podcastDetails.podcast}></PlayThumbnail>
             <ListRelatedPodcasts
