@@ -8,6 +8,7 @@ export default function SearchBar() {
   const handleSearchSubmit = (e: any) => {
     e.preventDefault();
     getPodcasts({ search });
+    setSearch("");
   };
 
   const handleSearchChange = (newSearch: string) => {

@@ -1,6 +1,7 @@
 import { PodcastType } from "../types";
-import { DAYS_OF_WEEK, MONTHS } from "../constants/appConstants";
 import usePodcasts from "../hooks/usePodcasts";
+import { Link } from "react-router-dom";
+import { getDate } from "../utils/miscFunctions";
 
 export default function Podcast({ podcast }: { podcast: PodcastType }) {
   const { playingPodcast, isPlaying, switchPlaying, swapPlayingPodcast } = usePodcasts();
@@ -13,26 +14,6 @@ export default function Podcast({ podcast }: { podcast: PodcastType }) {
     }
   };
 
-  const getDate = (fullDate: string) => {
-    const now = new Date(Date.now());
-    const releasedDate = new Date(fullDate);
-    const difference = now.getTime() - releasedDate.getTime();
-    let stringDate =
-      difference < 60 * 60 * 1000
-        ? "An our ago"
-        : difference < 24 * 60 * 60 * 1000 && now.getDate() === releasedDate.getDate()
-        ? "Today"
-        : difference < 7 * 24 * 60 * 60 * 1000
-        ? "Last " + DAYS_OF_WEEK[releasedDate.getDay()]
-        : releasedDate.getFullYear() === now.getFullYear()
-        ? releasedDate.getDate() + "/" + MONTHS[releasedDate.getMonth()]
-        : releasedDate.getDate() +
-          "/" +
-          (releasedDate.getMonth() + 1) +
-          "/" +
-          releasedDate.getFullYear();
-    return stringDate;
-  };
   const thisIsPlaying = playingPodcast.id === podcast.id;
   return (
     <div className="w-full flex flex-col justify-center h-16 md:h-20 border-b border-neutral-600">
@@ -58,7 +39,7 @@ export default function Podcast({ podcast }: { podcast: PodcastType }) {
             src={podcast.img}
             alt={podcast.title}
           />
-          <div className="table table-fixed w-full h-full">
+          <Link className="table table-fixed w-full h-full" to={`/podcast/${podcast.id}`}>
             <div className="table-row">
               <div className="text-white text-sm md:text-base font-medium whitespace-nowrap overflow-hidden overflow-ellipsis table-cell">
                 {podcast.title}
@@ -69,7 +50,7 @@ export default function Podcast({ podcast }: { podcast: PodcastType }) {
                 {podcast.authortName}
               </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div className="col-span-4 hidden md:table table-fixed w-full">

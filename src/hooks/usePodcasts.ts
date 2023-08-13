@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { MAX_NUM_PODCASTS_TO_FETCH } from "../constants/appConstants";
+import { useNavigate } from "react-router-dom";
 import { PodcastType } from "../types";
 import { PodcastContext } from "../context/podcastContext";
+import { getPodcastById, getPodcastsBySearch } from "../services/podcast";
 
 export default function usePodcasts() {
   const {
@@ -15,43 +16,31 @@ export default function usePodcasts() {
     setPlayingPodcast,
     isFirstTime,
   } = useContext(PodcastContext);
+  const navigate = useNavigate();
 
-  const mapPodcast = (podcastRaw: any) => {
-    return {
-      id: podcastRaw.trackId,
-      title: podcastRaw.trackName,
-      authortName: podcastRaw.artistName,
-      date: podcastRaw.releaseDate,
-      img:
-        podcastRaw.artworkUrl100 ||
-        podcastRaw.artworkUrl60 ||
-        podcastRaw.artworkUrl30 ||
-        podcastRaw.artworkUrl600,
-    };
+  type GetPodcatsDetailsProps = { id: string };
+  const getPodcastDetails = async ({ id }: GetPodcatsDetailsProps) => {
+    setLoading(true);
+    const podcast: PodcastType = await getPodcastById({ id: id });
+    let authorPodcasts = [];
+    if (podcast.id !== 0) {
+      authorPodcasts = await getPodcastsBySearch({ search: podcast.authortName });
+    }
+    setLoading(false);
+    return { podcast, authorPodcasts };
   };
 
   type GetPodcatsProps = { search: string };
-
   const getPodcasts = async ({ search }: GetPodcatsProps) => {
-    if (search === "") {
+    if (search.trim() === "") {
       return;
     }
+    navigate("/");
     isFirstTime.current = false;
     setLoading(true);
-    try {
-      const result = await fetch(
-        `https://itunes.apple.com/search?term=${search}&limit=${MAX_NUM_PODCASTS_TO_FETCH}&media=podcast&entity=podcast`
-      );
-      const data = await result.json();
-      const newPodcasts: PodcastType[] = data.results.map((podcastRaw: any) =>
-        mapPodcast(podcastRaw)
-      );
-      setPodcasts(newPodcasts);
-    } catch (error) {
-      throw new Error("Error fetching Podcasts from the API.");
-    } finally {
-      setLoading(false);
-    }
+    const newPodcasts: PodcastType[] = await getPodcastsBySearch({ search });
+    setLoading(false);
+    setPodcasts(newPodcasts);
   };
 
   const switchPlaying = () => {
@@ -59,7 +48,6 @@ export default function usePodcasts() {
   };
 
   type SwapPodcastProps = { newPodcast: PodcastType };
-
   const swapPlayingPodcast = ({ newPodcast }: SwapPodcastProps) => {
     setPlayingPodcast(newPodcast);
     setIsPlaying(true);
@@ -74,5 +62,6 @@ export default function usePodcasts() {
     playingPodcast,
     swapPlayingPodcast,
     isFirstTime: isFirstTime.current,
+    getPodcastDetails,
   };
 }

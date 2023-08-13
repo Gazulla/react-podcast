@@ -11,8 +11,10 @@ function App() {
         <Routes>
           <Route path="/" element={<SearchPage />} />
           <Route path="podcast">
+            <Route index element={<div>Resource not found</div>} />
             <Route path=":id" element={<DetailsPage />} />
           </Route>
+          <Route path="*" element={<div>Resource not found</div>} />
         </Routes>
       </main>
       <footer className="h-28 md:h-32"></footer>

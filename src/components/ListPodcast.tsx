@@ -1,17 +1,18 @@
 import useFilters from "../hooks/useFIlters";
-import usePodcasts from "../hooks/usePodcasts";
+import { PodcastType } from "../types";
 import PlayThumbnail from "./PlayThumbnail";
 import Podcast from "./Podcast";
 
-export default function ListPodcasts() {
-  const { podcasts, loading, isFirstTime } = usePodcasts();
+type ListPodcastProps = {
+  podcasts: PodcastType[];
+};
+export default function ListPodcasts({ podcasts }: ListPodcastProps) {
   const { filters, changeFilters, sortPodcasts } = useFilters();
   const filteredPodcasts = sortPodcasts(podcasts);
   return (
     <>
       <PlayThumbnail filters={filters} changeFilters={changeFilters}></PlayThumbnail>
-
-      {isFirstTime ? null : loading ? null : podcasts.length === 0 ? (
+      {podcasts.length === 0 ? (
         <div>No podcasts found</div>
       ) : (
         <>
