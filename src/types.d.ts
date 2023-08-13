@@ -8,7 +8,7 @@ export interface PodcastType {
 
 export interface PodcastDetails {
   podcast: PodcastType;
-  authorPodcasts: PodcastContextType[];
+  authorPodcasts: PodcastType[];
 }
 
 // Podcast context

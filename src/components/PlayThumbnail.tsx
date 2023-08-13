@@ -1,42 +1,49 @@
-import { SORT_TYPES } from "../constants/appConstants";
-import { FiltersType } from "../types";
+import usePodcasts from "../hooks/usePodcasts";
+import { PodcastType } from "../types";
 
 type PlayThumbnailProps = {
-  filters: FiltersType;
-  changeFilters: ({ newFilters }: { newFilters: FiltersType }) => void;
+  podcast: PodcastType;
 };
-export default function PlayThumbnail({ filters, changeFilters }: PlayThumbnailProps) {
-  const handleChangeSort = (newSort: string) => {
-    const nFilters = { sort: newSort };
-    changeFilters({ newFilters: nFilters });
+
+export default function PlayThumbnail({ podcast }: PlayThumbnailProps) {
+  const { isPlaying, playingPodcast, switchPlaying, swapPlayingPodcast } = usePodcasts();
+  const thisIsPlaying = playingPodcast.id === podcast.id;
+
+  const handlePlayClic = () => {
+    if (playingPodcast.id !== podcast.id) {
+      swapPlayingPodcast({ newPodcast: podcast });
+      !isPlaying && switchPlaying();
+    } else {
+      switchPlaying();
+    }
   };
 
   return (
-    <div className="w-full h-14 relative">
-      <div className="right-0 top-[10px] absolute justify-start items-center gap-5 inline-flex">
-        <div className="w-4 h-4">
-          <img src="/search_1.svg" alt="Search"></img>
-        </div>
-        <div className="rounded-2xl justify-start items-center gap-1.5 flex">
-          <select
-            className="text-white text-base font-normal bg-black border-0"
-            onChange={(e) => handleChangeSort(e.target.value)}
-            value={filters.sort}
+    <>
+      <img className="w-full mt-2" src="/podcast.png" alt="Studio microphone" />
+      <div className="mt-2 mb-4 w-full">
+        <div className="flex relative md:justify-center pl-16 md:pl-0">
+          <button
+            onClick={handlePlayClic}
+            className={`absolute z-30 left-0 w-14 h-14 rounded-full justify-center items-center inline-flex ${
+              isPlaying && thisIsPlaying
+                ? "bg-indigo-500 sm:hover:bg-indigo-600"
+                : "bg-neutral-500 sm:hover:bg-neutral-600"
+            } duration-300`}
           >
-            <option disabled={true} value="">
-              Order by
-            </option>
+            {isPlaying && thisIsPlaying ? (
+              <img className="w-5 h-5" src="/pause_1.svg" alt="Pause"></img>
+            ) : (
+              <img className="w-5 h-5" src="/play_1.svg" alt="Play"></img>
+            )}
+          </button>
 
-            {SORT_TYPES.map((st) => {
-              return (
-                <option key={st.value} value={st.value}>
-                  {st.name}
-                </option>
-              );
-            })}
-          </select>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+            {podcast.title}
+            <img className="inline ml-1 pb-1" src="/verify_1.svg" alt="Verify"></img>
+          </h1>
         </div>
       </div>
-    </div>
+    </>
   );
 }

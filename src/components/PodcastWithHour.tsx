@@ -3,7 +3,7 @@ import usePodcasts from "../hooks/usePodcasts";
 import { Link } from "react-router-dom";
 import { getDate } from "../utils/miscFunctions";
 
-export default function Podcast({ podcast }: { podcast: PodcastType }) {
+export default function PodcastWithHour({ podcast }: { podcast: PodcastType }) {
   const { playingPodcast, isPlaying, switchPlaying, swapPlayingPodcast } = usePodcasts();
 
   const handlePlayClic = () => {
@@ -42,7 +42,6 @@ export default function Podcast({ podcast }: { podcast: PodcastType }) {
             src={podcast.img}
             alt={podcast.title}
           />
-
           <div className="table table-fixed w-full h-full">
             <div className="table-row">
               <div className="text-white text-sm md:text-base font-medium whitespace-nowrap overflow-hidden overflow-ellipsis table-cell">
