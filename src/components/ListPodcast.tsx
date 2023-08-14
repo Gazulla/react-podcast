@@ -1,14 +1,14 @@
 import useFilters from "../hooks/useFIlters";
-import { PodcastType } from "../types";
+import { IPodcast } from "../types";
 import Podcast from "./Podcast";
 import FilterControls from "./FIlterControls";
 
 type ListPodcastProps = {
-  podcasts: PodcastType[];
+  podcasts: IPodcast[];
 };
 export default function ListPodcasts({ podcasts }: ListPodcastProps) {
-  const { filters, changeFilters, sortPodcasts, filterPodcasts } = useFilters();
-  const filteredPodcasts = filterPodcasts(sortPodcasts(podcasts));
+  const { filters, changeFilters, sortElements, filterElements } = useFilters();
+  const filteredPodcasts = filterElements(sortElements(podcasts) as IPodcast[]) as IPodcast[];
   return (
     <>
       <div className="w-full h-14 relative">

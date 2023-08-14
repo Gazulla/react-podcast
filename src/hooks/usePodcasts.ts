@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { PodcastType } from "../types";
+import { IPodcast, IPodcastTrack } from "../types";
 import { PodcastContext } from "../context/podcastContext";
 import { getPodcastById, getPodcastsBySearch } from "../services/podcast";
 
@@ -12,25 +12,24 @@ export default function usePodcasts() {
     setLoading,
     isPlaying,
     setIsPlaying,
-    playingPodcast,
-    setPlayingPodcast,
+    playingTrack,
+    setPlayingTrack,
     isFirstTime,
   } = useContext(PodcastContext);
+
   const navigate = useNavigate();
 
   type GetPodcatsDetailsProps = { id: string };
+
   const getPodcastDetails = async ({ id }: GetPodcatsDetailsProps) => {
     setLoading(true);
-    const podcast: PodcastType = await getPodcastById({ id: id });
-    let authorPodcasts = [];
-    if (podcast.id !== 0) {
-      authorPodcasts = await getPodcastsBySearch({ search: podcast.authortName });
-    }
+    const podcast = await getPodcastById({ id: id });
     setLoading(false);
-    return { podcast, authorPodcasts };
+    return podcast;
   };
 
   type GetPodcatsProps = { search: string };
+
   const getPodcasts = async ({ search }: GetPodcatsProps) => {
     if (search.trim() === "") {
       return;
@@ -38,18 +37,19 @@ export default function usePodcasts() {
     navigate("/");
     isFirstTime.current = false;
     setLoading(true);
-    const newPodcasts: PodcastType[] = await getPodcastsBySearch({ search });
+    const newPodcasts: IPodcast[] = await getPodcastsBySearch({ search });
     setLoading(false);
     setPodcasts(newPodcasts);
   };
 
   const switchPlaying = () => {
-    playingPodcast.id !== 0 && setIsPlaying(!isPlaying);
+    playingTrack.id !== "0" && setIsPlaying(!isPlaying);
   };
 
-  type SwapPodcastProps = { newPodcast: PodcastType };
-  const swapPlayingPodcast = ({ newPodcast }: SwapPodcastProps) => {
-    setPlayingPodcast(newPodcast);
+  type SwapPlayingTrackProps = { newTrack: IPodcastTrack };
+
+  const swapPlayingTrack = ({ newTrack }: SwapPlayingTrackProps) => {
+    setPlayingTrack(newTrack);
     setIsPlaying(true);
   };
 
@@ -59,8 +59,8 @@ export default function usePodcasts() {
     loading,
     isPlaying,
     switchPlaying,
-    playingPodcast,
-    swapPlayingPodcast,
+    playingTrack,
+    swapPlayingTrack,
     isFirstTime: isFirstTime.current,
     getPodcastDetails,
   };

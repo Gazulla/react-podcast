@@ -18,7 +18,7 @@ export default function SearchBar() {
   return (
     <form
       onSubmit={(e) => handleSearchSubmit(e)}
-      className="w-full h-12 pl-5 bg-zinc-900 rounded-2xl justify-start items-center gap-4 inline-flex"
+      className="w-full relative h-12 pl-5 bg-zinc-900 rounded-2xl justify-end items-center gap-4 inline-flex"
     >
       <button type="submit" className="w-5 h-5">
         <img src="/search_1.svg" alt="Search"></img>
@@ -30,6 +30,14 @@ export default function SearchBar() {
         onChange={(e) => handleSearchChange(e.target.value)}
         value={search}
       ></input>
+      <a
+        className="absolute r-0 rounded-2xl font-bold bg-green-700 p-3"
+        href="https://cors-anywhere.herokuapp.com/corsdemo"
+        target="_blank"
+        rel="noreferrer"
+      >
+        CORS
+      </a>
     </form>
   );
 }

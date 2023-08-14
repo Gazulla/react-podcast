@@ -1,24 +1,34 @@
-export interface PodcastType {
-  id: number;
+export interface IPodcastTrack {
+  id: string;
   title: string;
-  authortName: string;
   date: string;
   img: string;
+  audio: string;
+  duration: string;
+  authorName: string;
+  description: string;
 }
 
-export interface PodcastDetails {
-  podcast: PodcastType;
-  authorPodcasts: PodcastType[];
+export interface IPodcast {
+  id: string;
+  title: string;
+  authorName: string;
+  description: string;
+  imgSmall: string;
+  imgBig: string;
+  date: string;
+  feedUrl: string;
+  tracks: IPodcastTrack[];
 }
 
 // Podcast context
 export interface PodcastContextType {
-  podcasts: PodcastType[];
-  setPodcasts: (podcasts: PodcastType[]) => void;
+  podcasts: IPodcast[];
+  setPodcasts: (podcasts: IPodcast[]) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
-  playingPodcast: PodcastType;
-  setPlayingPodcast: (playingPodcast: PodcastType) => void;
+  playingTrack: IPodcastTrack;
+  setPlayingTrack: (playingTrack: IPodcastTrack) => void;
   isPlaying: boolean;
   setIsPlaying: (loading: boolean) => void;
   isFirstTime: MutableRefObject<boolean>;

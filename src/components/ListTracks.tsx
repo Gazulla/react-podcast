@@ -1,20 +1,20 @@
 import useFilters from "../hooks/useFIlters";
-import { PodcastType } from "../types";
-import PodcastWithHour from "./PodcastWithHour";
+import { IPodcastTrack } from "../types";
 import FilterControls from "./FIlterControls";
+import Track from "./Track";
 
 type ListPodcastProps = {
-  podcasts: PodcastType[];
+  tracks: IPodcastTrack[];
 };
-export default function ListRelatedPodcasts({ podcasts }: ListPodcastProps) {
-  const { filters, changeFilters, sortPodcasts, filterPodcasts } = useFilters();
-  const filteredPodcasts = filterPodcasts(sortPodcasts(podcasts));
+export default function ListPodcastTracks({ tracks }: ListPodcastProps) {
+  const { filters, changeFilters, sortElements, filterElements } = useFilters();
+  const filteredTracks = filterElements(sortElements(tracks) as IPodcastTrack[]) as IPodcastTrack[];
   return (
     <>
       <div className="w-full h-14 relative">
         <FilterControls filters={filters} changeFilters={changeFilters}></FilterControls>
       </div>
-      {podcasts.length === 0 ? (
+      {tracks.length === 0 ? (
         <div>No related podcasts found</div>
       ) : (
         <>
@@ -38,8 +38,8 @@ export default function ListRelatedPodcasts({ podcasts }: ListPodcastProps) {
             </div>
           </div>
 
-          {filteredPodcasts.map((podcast) => {
-            return <PodcastWithHour key={podcast.id} podcast={podcast}></PodcastWithHour>;
+          {filteredTracks.map((track) => {
+            return <Track key={track.id} track={track}></Track>;
           })}
         </>
       )}

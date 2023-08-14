@@ -29,3 +29,39 @@ export const getTime = (fullDate: string) => {
   hours = hours.length === 1 ? "0" + hours : hours;
   return hours + ":" + minutes;
 };
+
+export const removeCDATA = (str: string) => {
+  var div = document.createElement("div");
+  div.innerHTML = str.trim();
+  return div.innerText
+    .replace("<![CDATA[", "")
+    .replace("]]>", "")
+    .replace("&lt;![CDATA[", "")
+    .replace("]]&gt;", "")
+    .replace("<!--[CDATA[", "")
+    .replace("]]-->;", "")
+    .replace("<p-->", "")
+    .replace("<--/p>", "")
+    .replace("<p>", "")
+    .replace("</p>", "")
+    .replace("<a>", "")
+    .replace("</a>", "")
+    .replace("<em>", "")
+    .replace("&lt;", "")
+    .replace("&gt;", "")
+    .replace("</em>", "");
+};
+
+export const formatDuration = (duration: string) => {
+  let formatedDuration =
+    duration.length > 5 && duration.substring(0, 2) === "00"
+      ? duration.substring(3, 5) + " min"
+      : duration.length > 5 && duration.substring(0, 2) !== "00"
+      ? duration.substring(0, 5) + " h"
+      : duration.substring(3, 5) + " min";
+  return formatedDuration;
+};
+
+export const dC = (o: Object) => {
+  return JSON.parse(JSON.stringify(o));
+};

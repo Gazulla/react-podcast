@@ -1,32 +1,29 @@
 import { Link, useParams } from "react-router-dom";
 import usePodcasts from "../hooks/usePodcasts";
 import { useEffect, useState } from "react";
-import { PodcastDetails } from "../types";
+import { IPodcast } from "../types";
 import { EMPTY_PODCAST } from "../constants/appConstants";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
-import ListRelatedPodcasts from "../components/ListRelatedPodcasts";
 import PlayThumbnail from "../components/PlayThumbnail";
 import Loading from "../components/Loading";
+import ListTracks from "../components/ListTracks";
+import { dC } from "../utils/miscFunctions";
 
 export default function Details() {
   const { id } = useParams<{ id: string }>();
   const { getPodcastDetails, loading } = usePodcasts();
-  const [podcastDetails, setPodcastDetails] = useState<PodcastDetails>({
-    podcast: EMPTY_PODCAST,
-    authorPodcasts: [],
-  });
+  const [podcast, setPodcast] = useState<IPodcast>(dC(EMPTY_PODCAST));
 
   useEffect(() => {
     const getDetails = async () => {
       const newPodcastDetails = await getPodcastDetails({ id: podcastId });
-      setPodcastDetails(newPodcastDetails);
+      setPodcast(newPodcastDetails);
     };
     const podcastId = id || "";
     podcastId !== "" && getDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
   return (
     <>
       {/* Header (Search Bar + Back Button) */}
@@ -43,14 +40,10 @@ export default function Details() {
       <main className="w-full max-w-5xl px-3">
         {loading ? (
           <Loading></Loading>
-        ) : podcastDetails.podcast.id === 0 ? null : (
+        ) : podcast.id === "0" ? null : (
           <>
-            <PlayThumbnail podcast={podcastDetails.podcast}></PlayThumbnail>
-            <ListRelatedPodcasts
-              podcasts={podcastDetails.authorPodcasts.filter(
-                (pc) => pc.id !== podcastDetails.podcast.id
-              )}
-            />
+            <PlayThumbnail podcast={podcast}></PlayThumbnail>
+            <ListTracks tracks={podcast.tracks} />
           </>
         )}
       </main>

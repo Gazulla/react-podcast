@@ -1,11 +1,28 @@
-export const MAX_NUM_PODCASTS_TO_FETCH = 20;
+export const MAX_NUM_PODCASTS_TO_FETCH = 10;
+export const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
 export const EMPTY_PODCAST = {
-  id: 0,
+  id: "0",
   title: "",
-  authortName: "",
+  authorName: "",
+  date: "",
+  imgSmall: "/grey.png",
+  imgBig: "/grey.png",
+  feedUrl: "",
+  description: "",
+  audioUrl: "",
+  tracks: [],
+};
+
+export const EMPTY_TRACK = {
+  id: "0",
+  title: "",
   date: "",
   img: "/grey.png",
+  audio: "",
+  duration: "",
+  authorName: "",
+  description: "",
 };
 
 export const SORT_TYPES = [
@@ -17,7 +34,7 @@ export const SORT_TYPES = [
 ];
 
 export const NEW_FILTERS = {
-  sort: "",
+  sort: "released",
   word: "",
 };
 
