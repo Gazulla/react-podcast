@@ -9,6 +9,10 @@ type ControlsBarProps = {
   loadingTrack: boolean;
   previousTrack: () => void;
   nextTrack: () => void;
+  replay: boolean;
+  replayTrack: () => void;
+  shuffle: boolean;
+  shuffleTrack: () => void;
 };
 
 export default function PlayControls({
@@ -19,37 +23,33 @@ export default function PlayControls({
   loadingTrack,
   previousTrack,
   nextTrack,
+  replay,
+  replayTrack,
+  shuffle,
+  shuffleTrack,
 }: ControlsBarProps) {
   const handlePlayClic = () => {
     playingTrack.audio !== "" && play();
   };
 
-  const handlePauseClic = () => {
-    pause();
-  };
-
-  const handlePreviousClic = () => {
-    previousTrack();
-  };
-
-  const handleNextClic = () => {
-    nextTrack();
-  };
-
   return (
     <div className="flex gap-6 place-items-center">
-      <button className="w-6 h-6">
-        <img src="/shuffle_1.svg" alt="Shuflle"></img>
+      <button
+        className={`w-9 h-9 rounded-full justify-center items-center gap-3 inline-flex ${
+          shuffle && "bg-indigo-500"
+        } duration-300 `}
+      >
+        <img src="/shuffle_1.svg" alt="Shuflle" onClick={() => shuffleTrack()}></img>
       </button>
       <button className="w-6 h-6">
-        <img src="/step_forward_2.svg" alt="Previous" onClick={() => handlePreviousClic()}></img>
+        <img src="/step_forward_2.svg" alt="Previous" onClick={() => previousTrack()}></img>
       </button>
 
       {loadingTrack && playingTrack.id !== "0" ? (
         <LoadingTrack w={48} h={48}></LoadingTrack>
       ) : isPlaying ? (
         <button
-          onClick={() => handlePauseClic()}
+          onClick={() => pause()}
           className="w-12 h-12 rounded-full justify-center items-center gap-3 inline-flex bg-indigo-500 sm:hover:bg-indigo-600 duration-300"
         >
           <img className="w-5 h-5" src="/pause_1.svg" alt="Pause"></img>
@@ -64,10 +64,14 @@ export default function PlayControls({
       )}
 
       <button className="w-6 h-6">
-        <img src="/step_forward_1.svg" alt="Next" onClick={() => handleNextClic()}></img>
+        <img src="/step_forward_1.svg" alt="Next" onClick={() => nextTrack()}></img>
       </button>
-      <button className="w-6 h-6">
-        <img src="/rotate_right_1.svg" alt="Repeat"></img>
+      <button
+        className={`w-9 h-9 rounded-full justify-center items-center gap-3 inline-flex ${
+          replay && "bg-indigo-500"
+        } duration-300 `}
+      >
+        <img src="/rotate_right_1.svg" alt="Repeat" onClick={() => replayTrack()}></img>
       </button>
     </div>
   );

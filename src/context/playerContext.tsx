@@ -13,6 +13,8 @@ export function PlayerContextProvider({ children }: Props) {
   const [playingPodcast, setPlayingPodcast] = useState<IPodcast>(dC(EMPTY_PODCAST));
   const [loadingTrack, setLoadingTrack] = useState<boolean>(false);
   const [playingTrack, setPlayingTrack] = useState<IPodcastTrack>(dC(EMPTY_TRACK));
+  const [replay, setReplay] = useState<boolean>(false);
+  const [shuffle, setShuffle] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const audioRef = useRef(null);
   return (
@@ -26,6 +28,10 @@ export function PlayerContextProvider({ children }: Props) {
         setPlayingTrack,
         isPlaying,
         setIsPlaying,
+        replay,
+        setReplay,
+        shuffle,
+        setShuffle,
         audioRef,
       }}
     >

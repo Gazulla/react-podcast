@@ -15,10 +15,16 @@ export default function PlayBar() {
     setLoadingTrack,
     previousTrack,
     nextTrack,
+    replay,
+    switchReplayTrack,
+    shuffle,
+    switchShuffleTrack,
+    replayTrack,
+    randomTrack,
   } = usePlayer();
 
   const [timeProgress, setTimeProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(1);
   const progressBarRef = useRef<HTMLInputElement>(null);
   const playAnimationRef = useRef<number>(0);
 
@@ -28,6 +34,14 @@ export default function PlayBar() {
 
   const handleLoaded = () => {
     setLoadingTrack(false);
+  };
+
+  const handleOnEnded = () => {
+    if (replay) {
+      replayTrack();
+    } else {
+      shuffle ? randomTrack() : nextTrack();
+    }
   };
 
   const handleLoadedMetadata = () => {
@@ -76,7 +90,7 @@ export default function PlayBar() {
         onLoadedData={() => handleLoaded()}
         onLoadStart={() => handleLoadStart()}
         onLoadedMetadata={() => handleLoadedMetadata()}
-        onEnded={() => nextTrack()}
+        onEnded={() => handleOnEnded()}
         preload="none"
       />
       <div className="hidden sm:flex col-span-3 lg:col-span-4 gap-4 justify-betweeen place-items-center w-full">
@@ -112,6 +126,10 @@ export default function PlayBar() {
           loadingTrack={loadingTrack}
           previousTrack={previousTrack}
           nextTrack={nextTrack}
+          replay={replay}
+          replayTrack={switchReplayTrack}
+          shuffle={shuffle}
+          shuffleTrack={switchShuffleTrack}
         ></PlayControls>
       </div>
       <div className="col-span-3 lg:col-span-3 w-full hidden lg:block">
@@ -123,7 +141,7 @@ export default function PlayBar() {
         />
       </div>
       <div className="col-span-2 hidden lg:block">
-        <VolumeControl />
+        <VolumeControl audioRef={audioRef} />
       </div>
     </div>
   );

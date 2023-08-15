@@ -40,6 +40,10 @@ export interface PlayerContextType {
   setPlayingTrack: (playingTrack: IPodcastTrack) => void;
   isPlaying: boolean;
   setIsPlaying: (loading: boolean) => void;
+  shuffle: boolean;
+  setShuffle: (shuffle: boolean) => void;
+  replay: boolean;
+  setReplay: (replay: boolean) => void;
   audioRef: MutableRefObject<HTMLAudioElement>;
 }
 

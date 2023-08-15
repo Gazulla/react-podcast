@@ -1,5 +1,5 @@
 import { IPodcast, IPodcastTrack } from "../types";
-import { getDate, formatDuration } from "../utils/miscFunctions";
+import { getDate, formatTime } from "../utils/miscFunctions";
 import usePlayer from "../hooks/usePlayer";
 import LoadingTrack from "./LoadingTrack";
 
@@ -70,7 +70,7 @@ export default function Track({ track, podcast }: { track: IPodcastTrack; podcas
           {getDate(track.date)}
         </div>
         <div className="col-span-1 hidden md:table text-neutral-500 text-base font-medium">
-          {formatDuration(track.duration)}
+          {formatTime(Number(track.duration))}
         </div>
       </div>
     </div>

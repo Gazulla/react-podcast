@@ -14,6 +14,10 @@ export default function usePlayer() {
     audioRef,
     loadingTrack,
     setLoadingTrack,
+    replay,
+    setReplay,
+    shuffle,
+    setShuffle,
   } = useContext(PlayerContext);
 
   type PlayProps = {
@@ -50,7 +54,7 @@ export default function usePlayer() {
     }
   };
 
-  const nextTrack = async () => {
+  const nextTrack = () => {
     if (playingTrack.id !== "0" && !loadingTrack) {
       const currIndex = playingPodcast.tracks.findIndex((t: IPodcastTrack) => {
         return t.id === playingTrack.id;
@@ -65,6 +69,23 @@ export default function usePlayer() {
     }
   };
 
+  const switchReplayTrack = () => {
+    setReplay(!replay);
+  };
+
+  const switchShuffleTrack = () => {
+    setShuffle(!shuffle);
+  };
+
+  const randomTrack = () => {
+    const trackIndex = Math.floor(Math.random() * playingPodcast.tracks.length);
+    setPlayingTrack(dC(playingPodcast.tracks[trackIndex]));
+  };
+
+  const replayTrack = () => {
+    setPlayingTrack(dC(playingTrack));
+  };
+
   return {
     isPlaying,
     playingPodcast,
@@ -76,5 +97,11 @@ export default function usePlayer() {
     setLoadingTrack,
     previousTrack,
     nextTrack,
+    replay,
+    switchReplayTrack,
+    shuffle,
+    switchShuffleTrack,
+    replayTrack,
+    randomTrack,
   };
 }
