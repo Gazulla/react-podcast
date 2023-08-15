@@ -21,15 +21,6 @@ export const getDate = (fullDate: string) => {
   return stringDate;
 };
 
-export const getTime = (fullDate: string) => {
-  const date = new Date(fullDate);
-  let hours = date.getHours().toString();
-  let minutes = date.getMinutes().toString();
-  minutes = minutes.length === 1 ? "0" + minutes : minutes;
-  hours = hours.length === 1 ? "0" + hours : hours;
-  return hours + ":" + minutes;
-};
-
 export const removeCDATA = (str: string) => {
   var div = document.createElement("div");
   div.innerHTML = str.trim();
@@ -64,4 +55,15 @@ export const formatDuration = (duration: string) => {
 
 export const dC = (o: Object) => {
   return JSON.parse(JSON.stringify(o));
+};
+
+export const formatTime = (time: number) => {
+  if (time && !isNaN(time)) {
+    const minutes = Math.floor(time / 60);
+    const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const seconds = Math.floor(time % 60);
+    const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${formatMinutes}:${formatSeconds}`;
+  }
+  return "00:00";
 };

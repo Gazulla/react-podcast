@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import usePlayer from "../hooks/usePlayer";
 import PlayControls from "./PlayControls";
 import ProgressionBar from "./ProgressionBar";
@@ -17,6 +17,11 @@ export default function PlayBar() {
     nextTrack,
   } = usePlayer();
 
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const progressBarRef = useRef<HTMLInputElement>(null);
+  const playAnimationRef = useRef<number>(0);
+
   const handleLoadStart = () => {
     setLoadingTrack(true);
   };
@@ -25,13 +30,31 @@ export default function PlayBar() {
     setLoadingTrack(false);
   };
 
+  const handleLoadedMetadata = () => {
+    const seconds = audioRef.current.duration;
+    setDuration(seconds);
+    if (progressBarRef.current !== null) {
+      progressBarRef.current.max = seconds;
+    }
+  };
+
+  const repeat = useCallback(() => {
+    const currentTime = audioRef.current.currentTime;
+    setTimeProgress(currentTime);
+    if (progressBarRef.current !== null) {
+      progressBarRef.current.value = currentTime;
+    }
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }, [audioRef, progressBarRef, setTimeProgress]);
+
   useEffect(() => {
     if (isPlaying) {
       var playPromise = audioRef.current.play();
+
       if (playPromise !== undefined) {
         playPromise
           .then((_: any) => {
-            return;
+            playAnimationRef.current = requestAnimationFrame(repeat);
           })
           .catch((/*error: any*/) => {
             // Handle play() new media load request error
@@ -40,8 +63,9 @@ export default function PlayBar() {
       }
     } else {
       audioRef.current.pause();
+      cancelAnimationFrame(playAnimationRef.current);
     }
-  }, [isPlaying, audioRef, playingTrack]);
+  }, [isPlaying, audioRef, playingTrack, repeat]);
 
   return (
     <div className="fixed grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-6 justify-center place-items-center bg-zinc-900 w-full h-20 sm:h-28 bottom-0">
@@ -51,6 +75,8 @@ export default function PlayBar() {
         src={playingTrack.audio}
         onLoadedData={() => handleLoaded()}
         onLoadStart={() => handleLoadStart()}
+        onLoadedMetadata={() => handleLoadedMetadata()}
+        onEnded={() => nextTrack()}
         preload="none"
       />
       <div className="hidden sm:flex col-span-3 lg:col-span-4 gap-4 justify-betweeen place-items-center w-full">
@@ -89,7 +115,12 @@ export default function PlayBar() {
         ></PlayControls>
       </div>
       <div className="col-span-3 lg:col-span-3 w-full hidden lg:block">
-        <ProgressionBar />
+        <ProgressionBar
+          audioRef={audioRef}
+          progressBarRef={progressBarRef}
+          timeProgress={timeProgress}
+          duration={duration}
+        />
       </div>
       <div className="col-span-2 hidden lg:block">
         <VolumeControl />
