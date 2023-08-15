@@ -1,14 +1,16 @@
 import useFilters from "../hooks/useFIlters";
-import { IPodcastTrack } from "../types";
+import { IPodcast, IPodcastTrack } from "../types";
 import FilterControls from "./FIlterControls";
 import Track from "./Track";
 
 type ListPodcastProps = {
-  tracks: IPodcastTrack[];
+  podcast: IPodcast;
 };
-export default function ListPodcastTracks({ tracks }: ListPodcastProps) {
+export default function ListPodcastTracks({ podcast }: ListPodcastProps) {
   const { filters, changeFilters, sortElements, filterElements } = useFilters();
+  const tracks = podcast.tracks;
   const filteredTracks = filterElements(sortElements(tracks) as IPodcastTrack[]) as IPodcastTrack[];
+
   return (
     <>
       <div className="w-full h-14 relative">
@@ -39,7 +41,7 @@ export default function ListPodcastTracks({ tracks }: ListPodcastProps) {
           </div>
 
           {filteredTracks.map((track) => {
-            return <Track key={track.id} track={track}></Track>;
+            return <Track key={track.id} track={track} podcast={podcast}></Track>;
           })}
         </>
       )}

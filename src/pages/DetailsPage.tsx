@@ -43,7 +43,7 @@ export default function Details() {
         ) : podcast.id === "0" ? null : (
           <>
             <PlayThumbnail podcast={podcast}></PlayThumbnail>
-            <ListTracks tracks={podcast.tracks} />
+            <ListTracks podcast={podcast} />
           </>
         )}
       </main>

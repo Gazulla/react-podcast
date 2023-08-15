@@ -33,6 +33,10 @@ export async function getPodcastRssItems({ feedUrl }: { feedUrl: string }) {
     if (res.ok) {
       const data = await res.text();
       return data;
+    } else {
+      console.log(
+        "Error with the RSS response: 'Forbiden', 'Too many requests', 'Not found', etc. "
+      );
     }
   } catch (error: any) {
     throw new Error("Error fetching Podcast RSS Info. Error: " + error.message);

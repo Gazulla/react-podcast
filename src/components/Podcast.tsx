@@ -1,37 +1,42 @@
 import { IPodcast } from "../types";
-import usePodcasts from "../hooks/usePodcasts";
 import { Link } from "react-router-dom";
 import { getDate } from "../utils/miscFunctions";
+import usePlayer from "../hooks/usePlayer";
+import LoadingTrack from "./LoadingTrack";
 
 export default function Podcast({ podcast }: { podcast: IPodcast }) {
-  const { playingTrack, isPlaying, switchPlaying, swapPlayingTrack } = usePodcasts();
+  const { playingPodcast, isPlaying, play, pause, loadingTrack } = usePlayer();
 
   const handlePlayClic = () => {
-    if (playingTrack.id === podcast.tracks[0].id) {
-      switchPlaying();
-    } else {
-      swapPlayingTrack({ newTrack: podcast.tracks[0] });
-    }
+    play({ track: podcast.tracks[0], podcast: podcast });
+  };
+  const handlePauseClic = () => {
+    pause();
   };
 
-  const thisIsPlaying = playingTrack.id === podcast.tracks[0].id;
+  const thisIsPlaying = playingPodcast.id === podcast.id;
 
   return (
     <div className="w-full flex flex-col justify-center h-16 md:h-20 border-b border-neutral-600">
       <div className="grid grid-cols-12 gap-5 h-12 place-items-start justify-start">
         <div className="col-span-2 md:col-span-1 w-full flex justify-center place-items-center h-full ">
-          <button
-            className={`w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex ${
-              isPlaying && thisIsPlaying && "bg-indigo-500 sm:hover:bg-indigo-600"
-            } duration-300`}
-            onClick={handlePlayClic}
-          >
-            {isPlaying && thisIsPlaying ? (
+          {loadingTrack && thisIsPlaying ? (
+            <LoadingTrack w={34} h={34}></LoadingTrack>
+          ) : isPlaying && thisIsPlaying ? (
+            <button
+              className="w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex duration-300 bg-indigo-500 sm:hover:bg-indigo-600"
+              onClick={() => handlePauseClic()}
+            >
               <img className="w-3.5 h-3.5" src="/pause_1.svg" alt="Pause" />
-            ) : (
-              <img className="w-3.5 h-3.5" src="/play_1.svg" alt="Play" onClick={handlePlayClic} />
-            )}
-          </button>
+            </button>
+          ) : (
+            <button
+              className="w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex duration-300"
+              onClick={() => handlePlayClic()}
+            >
+              <img className="w-3.5 h-3.5" src="/play_1.svg" alt="Play" />
+            </button>
+          )}
         </div>
 
         <Link

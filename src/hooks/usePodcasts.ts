@@ -1,21 +1,11 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { IPodcast, IPodcastTrack } from "../types";
+import { IPodcast } from "../types";
 import { PodcastContext } from "../context/podcastContext";
 import { getPodcastById, getPodcastsBySearch } from "../services/podcast";
 
 export default function usePodcasts() {
-  const {
-    podcasts,
-    setPodcasts,
-    loading,
-    setLoading,
-    isPlaying,
-    setIsPlaying,
-    playingTrack,
-    setPlayingTrack,
-    isFirstTime,
-  } = useContext(PodcastContext);
+  const { podcasts, setPodcasts, loading, setLoading, isFirstTime } = useContext(PodcastContext);
 
   const navigate = useNavigate();
 
@@ -42,25 +32,10 @@ export default function usePodcasts() {
     setPodcasts(newPodcasts);
   };
 
-  const switchPlaying = () => {
-    playingTrack.id !== "0" && setIsPlaying(!isPlaying);
-  };
-
-  type SwapPlayingTrackProps = { newTrack: IPodcastTrack };
-
-  const swapPlayingTrack = ({ newTrack }: SwapPlayingTrackProps) => {
-    setPlayingTrack(newTrack);
-    setIsPlaying(true);
-  };
-
   return {
     podcasts,
     getPodcasts,
     loading,
-    isPlaying,
-    switchPlaying,
-    playingTrack,
-    swapPlayingTrack,
     isFirstTime: isFirstTime.current,
     getPodcastDetails,
   };

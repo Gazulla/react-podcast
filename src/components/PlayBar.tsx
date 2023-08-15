@@ -1,12 +1,58 @@
-import usePodcasts from "../hooks/usePodcasts";
+import { useEffect } from "react";
+import usePlayer from "../hooks/usePlayer";
 import PlayControls from "./PlayControls";
 import ProgressionBar from "./ProgressionBar";
 import VolumeControl from "./VolumeControl";
 
-export default function BottomPlayBar() {
-  const { playingTrack, isPlaying, switchPlaying } = usePodcasts();
+export default function PlayBar() {
+  const {
+    playingTrack,
+    isPlaying,
+    play,
+    pause,
+    audioRef,
+    loadingTrack,
+    setLoadingTrack,
+    previousTrack,
+    nextTrack,
+  } = usePlayer();
+
+  const handleLoadStart = () => {
+    setLoadingTrack(true);
+  };
+
+  const handleLoaded = () => {
+    setLoadingTrack(false);
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      var playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then((_: any) => {
+            return;
+          })
+          .catch((/*error: any*/) => {
+            // Handle play() new media load request error
+            // console.log(error);
+          });
+      }
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying, audioRef, playingTrack]);
+
   return (
     <div className="fixed grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-6 justify-center place-items-center bg-zinc-900 w-full h-20 sm:h-28 bottom-0">
+      <audio
+        className="hidden"
+        ref={audioRef}
+        src={playingTrack.audio}
+        onLoadedData={() => handleLoaded()}
+        onLoadStart={() => handleLoadStart()}
+        preload="none"
+      />
       <div className="hidden sm:flex col-span-3 lg:col-span-4 gap-4 justify-betweeen place-items-center w-full">
         {playingTrack.img !== "" ? (
           <img
@@ -32,7 +78,15 @@ export default function BottomPlayBar() {
         </div>
       </div>
       <div className="col-span-3">
-        <PlayControls isPlaying={isPlaying} switchPlaying={switchPlaying}></PlayControls>
+        <PlayControls
+          isPlaying={isPlaying}
+          play={play}
+          pause={pause}
+          playingTrack={playingTrack}
+          loadingTrack={loadingTrack}
+          previousTrack={previousTrack}
+          nextTrack={nextTrack}
+        ></PlayControls>
       </div>
       <div className="col-span-3 lg:col-span-3 w-full hidden lg:block">
         <ProgressionBar />

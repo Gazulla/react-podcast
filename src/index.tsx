@@ -3,11 +3,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { PodcastContextProvider } from "./context/podcastContext";
+import { PlayerContextProvider } from "./context/playerContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <PodcastContextProvider>
-    <App />
-  </PodcastContextProvider>
+  <PlayerContextProvider>
+    <PodcastContextProvider>
+      <App />
+    </PodcastContextProvider>
+  </PlayerContextProvider>
 );
 reportWebVitals();
