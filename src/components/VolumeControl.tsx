@@ -4,7 +4,7 @@ type VolumeControlProps = {
 };
 
 export default function VolumeControl({ audioRef }: VolumeControlProps) {
-  const [volume, setVolume] = useState<number>(30);
+  const [volume, setVolume] = useState<number>(40);
 
   useEffect(() => {
     if (audioRef) {

@@ -31,7 +31,9 @@ export default function Podcast({ podcast }: { podcast: IPodcast }) {
             </button>
           ) : (
             <button
-              className="w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex duration-300"
+              className={`${
+                thisIsPlaying && "bg-neutral-600"
+              } w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300`}
               onClick={() => handlePlayClic()}
             >
               <img className="w-3.5 h-3.5" src="/play_1.svg" alt="Play" />

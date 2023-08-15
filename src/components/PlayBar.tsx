@@ -83,6 +83,10 @@ export default function PlayBar() {
 
   return (
     <div className="fixed grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-6 justify-center place-items-center bg-zinc-900 w-full h-20 sm:h-28 bottom-0">
+      {playingTrack.id === "0" && (
+        <div className="absolute bg-black w-full h-full bg-opacity-70 z-50"></div>
+      )}
+
       <audio
         className="hidden"
         ref={audioRef}
@@ -138,6 +142,7 @@ export default function PlayBar() {
           progressBarRef={progressBarRef}
           timeProgress={timeProgress}
           duration={duration}
+          setTimeProgress={setTimeProgress}
         />
       </div>
       <div className="col-span-2 hidden lg:block">

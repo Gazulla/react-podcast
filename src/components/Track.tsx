@@ -13,7 +13,6 @@ export default function Track({ track, podcast }: { track: IPodcastTrack; podcas
     pause();
   };
   const thisIsPlaying = playingTrack.id === track.id;
-
   return (
     <div className="w-full flex flex-col justify-center h-16 md:h-20 border-b border-neutral-600">
       <div className="grid grid-cols-12 gap-5 h-12 place-items-start justify-start">
@@ -29,7 +28,9 @@ export default function Track({ track, podcast }: { track: IPodcastTrack; podcas
             </button>
           ) : (
             <button
-              className="w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex duration-300"
+              className={`${
+                thisIsPlaying && "bg-neutral-600"
+              } w-8 h-8 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300`}
               onClick={() => handlePlayClic()}
             >
               <img className="w-3.5 h-3.5" src="/play_1.svg" alt="Play" />
@@ -70,7 +71,7 @@ export default function Track({ track, podcast }: { track: IPodcastTrack; podcas
           {getDate(track.date)}
         </div>
         <div className="col-span-1 hidden md:table text-neutral-500 text-base font-medium">
-          {formatTime(Number(track.duration))}
+          {formatTime(track.duration)}
         </div>
       </div>
     </div>

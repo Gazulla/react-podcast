@@ -7,10 +7,16 @@ type PlayThumbnailProps = {
 };
 
 export default function PlayThumbnail({ podcast }: PlayThumbnailProps) {
-  const { playingTrack, isPlaying, play, pause, loadingTrack } = usePlayer();
+  const { playingTrack, playingPodcast, isPlaying, play, pause, loadingTrack } = usePlayer();
 
   const handlePlayClic = () => {
-    playingTrack.audio !== "" && play();
+    if (playingTrack.audio !== "") {
+      if (playingPodcast.id !== podcast.id) {
+        play({ track: podcast.tracks[0], podcast: podcast });
+      } else {
+        play();
+      }
+    }
   };
 
   const handlePauseClic = () => {
@@ -37,7 +43,7 @@ export default function PlayThumbnail({ podcast }: PlayThumbnailProps) {
             <div className="absolute z-30 left-0 w-14 h-14 rounded-full justify-center items-center inline-flex">
               <LoadingTrack w={48} h={48}></LoadingTrack>
             </div>
-          ) : isPlaying ? (
+          ) : isPlaying && playingPodcast.id === podcast.id ? (
             <button
               onClick={handlePauseClic}
               className="absolute z-30 left-0 w-14 h-14 rounded-full justify-center items-center inline-flex bg-indigo-500 sm:hover:bg-indigo-600"

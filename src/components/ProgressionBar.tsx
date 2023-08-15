@@ -5,6 +5,7 @@ type ProgressionBarProps = {
   audioRef: any;
   timeProgress: number;
   duration: number;
+  setTimeProgress: (timeProgress: number) => void;
 };
 
 export default function ProgressionBar({
@@ -12,9 +13,11 @@ export default function ProgressionBar({
   audioRef,
   timeProgress,
   duration,
+  setTimeProgress,
 }: ProgressionBarProps) {
   const handleProgressChange = () => {
     audioRef.current.currentTime = progressBarRef.current.value;
+    setTimeProgress(progressBarRef.current.value);
   };
   return (
     <div className="flex justify-center place-items-center gap-3.5 w-full">
@@ -26,12 +29,11 @@ export default function ProgressionBar({
           style={{ width: `${(timeProgress / duration) * 100}%` }}
         />
         <input
-          className="absolute w-full -top-1 opacity-0 cursor-pointer"
+          className="absolute w-full -top-1 cursor-pointer opacity-0"
           type="range"
           ref={progressBarRef}
-          defaultValue="0"
-          max={100}
           min={0}
+          max={1}
           onChange={() => handleProgressChange()}
         />
       </div>

@@ -33,15 +33,15 @@ export default function PlayControls({
   };
 
   return (
-    <div className="flex gap-6 place-items-center">
+    <div className="flex gap-4 place-items-center">
       <button
-        className={`w-9 h-9 rounded-full justify-center items-center gap-3 inline-flex ${
-          shuffle && "bg-indigo-500"
-        } duration-300 `}
+        className={`w-11 h-11 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300 ${
+          shuffle && "bg-indigo-500 "
+        }`}
       >
         <img src="/shuffle_1.svg" alt="Shuflle" onClick={() => shuffleTrack()}></img>
       </button>
-      <button className="w-6 h-6">
+      <button className="w-11 h-11 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300">
         <img src="/step_forward_2.svg" alt="Previous" onClick={() => previousTrack()}></img>
       </button>
 
@@ -50,26 +50,26 @@ export default function PlayControls({
       ) : isPlaying ? (
         <button
           onClick={() => pause()}
-          className="w-12 h-12 rounded-full justify-center items-center gap-3 inline-flex bg-indigo-500 sm:hover:bg-indigo-600 duration-300"
+          className="w-12 h-12 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 bg-indigo-500 sm:hover:bg-indigo-600 duration-300"
         >
           <img className="w-5 h-5" src="/pause_1.svg" alt="Pause"></img>
         </button>
       ) : (
         <button
           onClick={() => handlePlayClic()}
-          className="w-12 h-12 rounded-full justify-center items-center gap-3 inline-flex duration-300"
+          className="w-12 h-12 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300"
         >
           <img className="w-5 h-5" src="/play_1.svg" alt="Play"></img>
         </button>
       )}
 
-      <button className="w-6 h-6">
+      <button className="w-11 h-11 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300">
         <img src="/step_forward_1.svg" alt="Next" onClick={() => nextTrack()}></img>
       </button>
       <button
-        className={`w-9 h-9 rounded-full justify-center items-center gap-3 inline-flex ${
+        className={`w-11 h-11 rounded-full justify-center items-center gap-3 inline-flex active:bg-indigo-400 md:hover:bg-indigo-400 duration-300 ${
           replay && "bg-indigo-500"
-        } duration-300 `}
+        }`}
       >
         <img src="/rotate_right_1.svg" alt="Repeat" onClick={() => replayTrack()}></img>
       </button>
