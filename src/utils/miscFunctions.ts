@@ -43,7 +43,11 @@ export const removeCDATA = (str: string) => {
     .replace("</em>", "");
 };
 
-export const formatDuration = (duration: any) => {
+export const dC = (o: Object) => {
+  return JSON.parse(JSON.stringify(o));
+};
+
+/* export const formatDuration = (duration: any) => {
   let formatedDuration = "00:00";
   if (duration.length === 8 && duration.substring(0, 2) === "00") {
     formatedDuration = duration.substring(3, 8);
@@ -57,10 +61,27 @@ export const formatDuration = (duration: any) => {
     formatedDuration = duration;
   }
   return formatedDuration;
-};
+}; */
 
-export const dC = (o: Object) => {
-  return JSON.parse(JSON.stringify(o));
+export const formatDuration = (duration: any) => {
+  let formatedDuration = "00:00";
+  const durArr = duration.toString().split(":");
+  if (durArr.length === 1) {
+    durArr[0] === "0" ? (formatedDuration = `00:00`) : (formatedDuration = `00:${durArr[0]}`);
+  } else if (durArr.length === 2) {
+    durArr[0].length === 1
+      ? (formatedDuration = `0${durArr[0]}:${durArr[1]}`)
+      : (formatedDuration = `${durArr[0]}:${durArr[1]}`);
+  } else {
+    const hours = Number(durArr[0]);
+    const minutes = hours * 60;
+    const previousMinutes = Number(durArr[1]);
+    const totalMinutes = minutes + previousMinutes;
+    totalMinutes.toString().length === 1
+      ? (formatedDuration = `0${totalMinutes}:${durArr[2]}`)
+      : (formatedDuration = `${totalMinutes}:${durArr[2]}`);
+  }
+  return formatedDuration;
 };
 
 export const formatTime = (time: any) => {

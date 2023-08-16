@@ -54,7 +54,7 @@ export async function getPodcastRssInfo({ feedUrl }: { feedUrl: string }) {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       const newTrck = getTrackRssInfo(item.innerHTML);
-      tracks.push(structuredClone(newTrck));
+      tracks.push(newTrck);
     }
   }
   podcastRssInfo.title = xmlDoc?.getElementsByTagName("title")[0]?.outerHTML || "";
@@ -62,7 +62,7 @@ export async function getPodcastRssInfo({ feedUrl }: { feedUrl: string }) {
   podcastRssInfo.description = xmlDoc?.getElementsByTagName("description")[0]?.innerHTML || "";
   podcastRssInfo.imgBig =
     xmlDoc?.getElementsByTagName("itunes:image")[0]?.getAttribute("href") || "";
-  podcastRssInfo.tracks = [...tracks];
+  podcastRssInfo.tracks = tracks;
   return podcastRssInfo;
 }
 

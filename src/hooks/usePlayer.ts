@@ -25,7 +25,7 @@ export default function usePlayer() {
     podcast: IPodcast;
   };
 
-  const play = async (
+  const play = (
     { track, podcast }: PlayProps = { track: playingTrack, podcast: playingPodcast }
   ) => {
     playingPodcast.id !== podcast.id && setPlayingPodcast(dC(podcast));
@@ -33,7 +33,7 @@ export default function usePlayer() {
     setIsPlaying(true);
   };
 
-  const pause = async () => {
+  const pause = () => {
     if (!audioRef.current.paused && isPlaying && !loadingTrack) {
       setIsPlaying(false);
     }
