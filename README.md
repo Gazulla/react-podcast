@@ -10,12 +10,11 @@ Make sure you have Node.js installed.
 Download the source code from this repository.  
 Extract the code to a directory.  
 Open a terminal and enter to the project directory.  
-Run:  
 
+Run:  
 ### `npm install`
 
 Run:
-
 ### `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.  
