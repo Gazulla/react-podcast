@@ -2,7 +2,7 @@
 
 Demo project made by Pedro Iván Gazulla Giménez  
 
-The web app is a postcast player that fetch the podcast information from the iTunes API and the RSS feed of the podcasts, and then plays each podcast in a web audio player.  
+The web app is a podcast player that fetch the podcasts information from iTunes API and RSS feed of the podcasts, and then plays each podcast in a web audio player.  
 
 ## To run the App (dev mode)
 Make sure you have Node.js installed.  
