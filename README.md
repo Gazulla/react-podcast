@@ -1,9 +1,9 @@
 # React Podcast App
-
-Demo project made by Pedro Iván Gazulla Giménez  
-
-This web app is a podcast player that fetch podcasts from iTunes API and RSS feeds, and then plays the selected podcast tracks in a web audio player.  
-
+![Screenshot](react_podcast_player.png)
+*Demo project made by Pedro Iván Gazulla Giménez*  
+<br />
+This web app is a podcast player that fetch podcasts from iTunes API and RSS feeds, then plays the selected podcast tracks in a web audio player.  
+<br />
 ## To run the App (dev mode)
 Make sure you have Node.js installed.  
 
