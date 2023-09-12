@@ -21,7 +21,9 @@ export default function ProgressionBar({
   };
   return (
     <div className="flex justify-center place-items-center gap-3.5 w-full">
-      <div className="text-white text-base font-medium">{formatTime(timeProgress)}</div>
+      <div className="text-white text-base font-medium min-w-[40px]">
+        {formatTime(timeProgress)}
+      </div>
       <div className="grow h-1 relative">
         <div className="w-full h-1 absolute bg-white bg-opacity-30 rounded-lg" />
         <div
@@ -29,7 +31,7 @@ export default function ProgressionBar({
           style={{ width: `${(timeProgress / duration) * 100}%` }}
         />
         <input
-          className="absolute w-full -top-1 cursor-pointer opacity-0"
+          className="absolute w-[104%] -left-[3px] -top-[0.3rem] cursor-pointer opacity-0"
           type="range"
           ref={progressBarRef}
           min={0}

@@ -64,10 +64,9 @@ export default function PlayBar() {
   useEffect(() => {
     if (isPlaying) {
       var playPromise = audioRef.current.play();
-
       if (playPromise !== undefined) {
         playPromise
-          .then((_: any) => {
+          .then(() => {
             playAnimationRef.current = requestAnimationFrame(repeat);
           })
           .catch((/*error: any*/) => {
