@@ -2,7 +2,7 @@
 
 Demo project made by Pedro Iván Gazulla Giménez  
 
-The web app is a podcast player that fetch the podcasts information from iTunes API and RSS feed of the podcasts, and then plays each podcast in a web audio player.  
+This web app is a podcast player that fetch podcasts from iTunes API and RSS feeds, and then plays the selected podcast tracks in a web audio player.  
 
 ## To run the App (dev mode)
 Make sure you have Node.js installed.  
@@ -17,6 +17,15 @@ Run:
 Run:
 ### `npm start`
 
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.  
 
-Do not forget to press the green "CORS" button and request permission to use a CORS proxy.
+
+Do not forget to press the green "CORS" button:  
+![Screenshot](click_cors_button.png)
+
+
+And request temporal access to use the CORS proxy:
+![Screenshot](request_temporary_access.png)
+
+If you don't request temporary access to the CORS proxy you won't be able to fetch podcasts.
